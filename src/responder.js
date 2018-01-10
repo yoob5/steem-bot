@@ -77,7 +77,7 @@ function extractPermlinkFromLink(steemitLink) {
 export default class Responder {
   constructor({targetUsername, targetPermlink, transferMemo, responderUsername, postingKey, activeKey}) {
     this.targetUsername = targetUsername;
-    this.targetPermlink = targetPermlink;
+    this.targetPermlink = cleanMemo(targetPermlink);
     this.transferMemo = transferMemo;
     this.responderUsername = responderUsername;
     this.postingKey = postingKey;
