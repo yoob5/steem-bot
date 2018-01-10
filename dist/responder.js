@@ -52,6 +52,16 @@ function isValidSteemitLink(link) {
 }
 
 /**
+ * Remove data that is not part of the steemit link
+ * @param {string} steemitMemo 
+ */
+function cleanMemo(steemitMemo) {
+  var steemitLink = steemitMemo.match(/(https?:\/\/[^ ]*)/);
+  var result = steemitLink && steemitLink[1];
+  return result;
+}
+
+/**
  * Should input a full steemit article link and return the username of the author
  * @param {string} steemitLink 
  */
@@ -91,7 +101,7 @@ var Responder = function () {
     _classCallCheck(this, Responder);
 
     this.targetUsername = targetUsername;
-    this.targetPermlink = targetPermlink;
+    this.targetPermlink = cleanMemo(targetPermlink);
     this.transferMemo = transferMemo;
     this.responderUsername = responderUsername;
     this.postingKey = postingKey;
@@ -212,8 +222,9 @@ var Responder = function () {
     value: function upvoteOnMemo() {
       var votingPercentage = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 100.0;
 
-      var customTargetUsername = extractUsernameFromLink(this.transferMemo);
-      var customTargetPermlink = extractPermlinkFromLink(this.transferMemo);
+      var transferMemo = cleanMemo(this.transferMemo);
+      var customTargetUsername = extractUsernameFromLink(transferMemo);
+      var customTargetPermlink = extractPermlinkFromLink(transferMemo);
 
       return this.upvote(votingPercentage, customTargetUsername, customTargetPermlink);
     }
@@ -222,16 +233,18 @@ var Responder = function () {
     value: function downvoteOnMemo() {
       var votingPercentage = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 100.0;
 
-      var customTargetUsername = extractUsernameFromLink(this.transferMemo);
-      var customTargetPermlink = extractPermlinkFromLink(this.transferMemo);
+      var transferMemo = cleanMemo(this.transferMemo);
+      var customTargetUsername = extractUsernameFromLink(transferMemo);
+      var customTargetPermlink = extractPermlinkFromLink(transferMemo);
 
       return this.downvote(votingPercentage, customTargetUsername, customTargetPermlink);
     }
   }, {
     key: 'commentOnMemo',
     value: function commentOnMemo(message) {
-      var customTargetUsername = extractUsernameFromLink(this.transferMemo);
-      var customTargetPermlink = extractPermlinkFromLink(this.transferMemo);
+      var transferMemo = cleanMemo(this.transferMemo);
+      var customTargetUsername = extractUsernameFromLink(transferMemo);
+      var customTargetPermlink = extractPermlinkFromLink(transferMemo);
 
       return this.comment(message, customTargetUsername, customTargetPermlink);
     }
