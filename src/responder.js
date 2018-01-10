@@ -37,6 +37,16 @@ function isValidSteemitLink(link) {
 }
 
 /**
+ * Remove data that is not part of the steemit link
+ * @param {string} steemitMemo 
+ */
+function cleanMemo(steemitMemo) {
+  const steemitLink = steemitMemo.match(/(https?:\/\/[^ ]*)/);
+  const result = steemitLink && steemitLink[1];
+  return result;
+}
+
+/**
  * Should input a full steemit article link and return the username of the author
  * @param {string} steemitLink 
  */
@@ -220,22 +230,25 @@ export default class Responder {
   }
 
   upvoteOnMemo(votingPercentage = 100.0) {
-    const customTargetUsername = extractUsernameFromLink(this.transferMemo);
-    const customTargetPermlink = extractPermlinkFromLink(this.transferMemo);
+    const transferMemo = cleanMemo(this.transferMemo);
+    const customTargetUsername = extractUsernameFromLink(transferMemo);
+    const customTargetPermlink = extractPermlinkFromLink(transferMemo);
 
     return this.upvote(votingPercentage, customTargetUsername, customTargetPermlink);
   }
 
   downvoteOnMemo(votingPercentage = 100.0) {
-    const customTargetUsername = extractUsernameFromLink(this.transferMemo);
-    const customTargetPermlink = extractPermlinkFromLink(this.transferMemo);
+    const transferMemo = cleanMemo(this.transferMemo);
+    const customTargetUsername = extractUsernameFromLink(transferMemo);
+    const customTargetPermlink = extractPermlinkFromLink(transferMemo);
 
     return this.downvote(votingPercentage, customTargetUsername, customTargetPermlink);
   }
 
   commentOnMemo(message) {
-    const customTargetUsername = extractUsernameFromLink(this.transferMemo);
-    const customTargetPermlink = extractPermlinkFromLink(this.transferMemo);
+    const transferMemo = cleanMemo(this.transferMemo);
+    const customTargetUsername = extractUsernameFromLink(transferMemo);
+    const customTargetPermlink = extractPermlinkFromLink(transferMemo);
 
     return this.comment(message, customTargetUsername, customTargetPermlink);
   }
