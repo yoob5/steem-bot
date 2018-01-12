@@ -43,7 +43,8 @@ function isValidSteemitLink(link) {
 function cleanMemo(steemitMemo) {
   const steemitLink = steemitMemo.match(/(https?:\/\/[^ ]*)/);
   const result = steemitLink && steemitLink[1];
-  return result;
+  const stripedResult = result.split('#')[0];
+  return stripedResult;
 }
 
 /**
