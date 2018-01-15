@@ -57,6 +57,11 @@ function isValidSteemitLink(link) {
  */
 function cleanMemo(steemitMemo) {
   var steemitLink = steemitMemo.match(/(https?:\/\/[^ ]*)/);
+
+  if (!steemitLink) {
+    return console.log('Memo does not contain steemit link');
+  }
+
   var result = steemitLink && steemitLink[1];
   var stripedResult = result.split('#')[0];
   return stripedResult;
