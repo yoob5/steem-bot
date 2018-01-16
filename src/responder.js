@@ -44,7 +44,7 @@ function cleanMemo(steemitMemo) {
   const steemitLink = steemitMemo.match(/(https?:\/\/[^ ]*)/);
   
   if (!steemitLink) {
-    return console.log('Memo does not contain steemit link');
+    return console.log('Memo does not contain steemit link.');
   }
   
   const result = steemitLink && steemitLink[1];
