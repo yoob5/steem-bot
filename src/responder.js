@@ -47,10 +47,11 @@ function cleanMemo(steemitMemo) {
     return false;
   }
 
-  steemitLink = steemitLink.replace('busy.org', 'steemit.com');
-
   const result = steemitLink && steemitLink[1];
-  const stripedResult = result.split('#')[0];
+  let stripedResult = result.split('#')[0];
+
+  stripedResult = stripedResult.replace('busy.org', 'steemit.com');
+
   return stripedResult;
 }
 
