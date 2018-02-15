@@ -48,7 +48,7 @@ function convert2VotingWeight(votingPercentage) {
 }
 
 function isValidSteemitLink(link) {
-  return link.match(/^https?:\/\/(www\.)?steemit\.com\//i);
+  return link.match(/^https?:\/\/(www\.)?steemit\.com\//i) || link.match(/^https?:\/\/(www\.)?busy\.org\//i);
 }
 
 /**
@@ -64,6 +64,9 @@ function cleanMemo(steemitMemo) {
 
   var result = steemitLink && steemitLink[1];
   var stripedResult = result.split('#')[0];
+
+  stripedResult = stripedResult.replace('busy.org', 'steemit.com');
+
   return stripedResult;
 }
 
