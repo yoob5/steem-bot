@@ -33,7 +33,7 @@ function convert2VotingWeight(votingPercentage) {
 }
 
 function isValidSteemitLink(link) {
-  return link.match(/^https?:\/\/(www\.)?steemit\.com\//i);
+  return link.match(/^https?:\/\/(www\.)?steemit\.com\//i) || link.match(/^https?:\/\/(www\.)?busy\.org\//i);
 }
 
 /**
@@ -41,12 +41,14 @@ function isValidSteemitLink(link) {
  * @param {string} steemitMemo 
  */
 function cleanMemo(steemitMemo) {
-  const steemitLink = steemitMemo.match(/(https?:\/\/[^ ]*)/);
+  let steemitLink = steemitMemo.match(/(https?:\/\/[^ ]*)/);
   
   if (!steemitLink) {
     return false;
   }
-  
+
+  steemitLink = steemitLink.replace('busy.org', 'steemit.com');
+
   const result = steemitLink && steemitLink[1];
   const stripedResult = result.split('#')[0];
   return stripedResult;
